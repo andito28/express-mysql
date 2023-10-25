@@ -1,14 +1,15 @@
 const express = require("express");
 
 const userController = require("../controller/users");
+const verifyToken = require("../middleware/verifyToken");
 
 const router = express.Router();
 
 // CREATE
-router.post("/users", userController.createNewUser);
+router.post("/users", verifyToken, userController.createNewUser);
 
 // READ
-router.get("/users", userController.getUsers);
+router.get("/users", verifyToken, userController.getUsers);
 
 // UPDATE
 router.patch("/users/:id", userController.updateUser);

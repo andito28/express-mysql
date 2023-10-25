@@ -12,7 +12,26 @@ const checkUser = (email) => {
   return dbPool
     .execute(query, value)
     .then(([rows]) => {
-      return rows.length > 0;
+      return rows;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+const updateToken = (id, token) => {
+  const query = "UPDATE users SET refresh_token = ? WHERE id = ?";
+  const value = [token, id];
+  return dbPool.execute(query, value);
+};
+
+const refreshToken = (token) => {
+  const query = "SELECT * FROM users WHERE refresh_token = ?";
+  const value = [token];
+  return dbPool
+    .execute(query, value)
+    .then(([rows]) => {
+      return rows;
     })
     .catch((error) => {
       throw error;
@@ -22,4 +41,6 @@ const checkUser = (email) => {
 module.exports = {
   registerUser,
   checkUser,
+  updateToken,
+  refreshToken,
 };

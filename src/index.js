@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 const PORT = process.env.PORT || 5000;
 
 const userRoutes = require("./routes/users");
@@ -8,6 +10,8 @@ const authRoutes = require("./routes/auth");
 const middlewareLogRequest = require("./middleware/logs");
 
 app.use(middlewareLogRequest);
+app.use(cors({ credentials: true, origin: "http://localhost::4000" }));
+app.use(cookieParser());
 app.use(express.json());
 
 app.use(userRoutes);
