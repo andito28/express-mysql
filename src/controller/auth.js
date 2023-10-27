@@ -1,5 +1,5 @@
 const authModel = require("../models/auth");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 //REGISTER
@@ -16,9 +16,13 @@ const register = async (req, res) => {
     });
   }
 
-  //hash password
-  const salt = await bcrypt.genSalt();
-  const passwordHash = await bcrypt.hash(password, salt);
+  //hash password with bcrypt
+  // const salt = await bcrypt.genSalt();
+  // const passwordHash = await bcrypt.hash(password, salt);
+
+  //has password with bcryptjs
+  const saltRounds = 10;
+  const passwordHash = await bcrypt.hash(password, saltRounds);
 
   //data request
   const dataRequest = {
@@ -61,6 +65,7 @@ const login = async (req, res) => {
     }
 
     const match = await bcrypt.compare(password, user[0].password);
+
     if (!match) {
       return res.json({
         message: "Incorrect password",
