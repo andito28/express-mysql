@@ -1,8 +1,15 @@
 const dbPool = require("../config/database");
 
 const registerUser = (req) => {
-  const query = "INSERT INTO users (name,email,password) VALUES (?,?,?)";
-  const values = [req.name, req.email, req.password];
+  const query =
+    "INSERT INTO users (name,email,password,created_at,updated_at) VALUES (?,?,?,?,?)";
+  const values = [
+    req.name,
+    req.email,
+    req.password,
+    req.currentDate,
+    req.currentDate,
+  ];
   return dbPool.execute(query, values);
 };
 

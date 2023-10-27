@@ -25,10 +25,12 @@ const register = async (req, res) => {
   const passwordHash = await bcrypt.hash(password, saltRounds);
 
   //data request
+  const currentDate = new Date();
   const dataRequest = {
     name: name,
     email: email,
     password: passwordHash,
+    currentDate: currentDate,
   };
 
   try {
