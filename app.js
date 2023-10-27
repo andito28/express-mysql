@@ -14,8 +14,8 @@ app.use(cors({ credentials: true, origin: "http://localhost::4000" }));
 app.use(cookieParser());
 app.use(express.json());
 
-app.use(userRoutes);
-app.use(authRoutes);
+app.use("/api", userRoutes);
+app.use("/api", authRoutes);
 
 app.listen(PORT, () => {
   console.log(`server berhasil di running di port ${PORT} `);

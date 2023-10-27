@@ -3,9 +3,13 @@ const userModel = require("../models/users");
 const getUsers = async (req, res) => {
   try {
     const [data] = await userModel.getAllUser();
+    const dataUser = data.map((user) => ({
+      nama: user.name,
+      email: user.email,
+    }));
     res.json({
       message: "get all users ",
-      data: data,
+      data: dataUser,
     });
   } catch (error) {
     res.status(500).json({
